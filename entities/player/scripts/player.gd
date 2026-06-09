@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 enum ControlScheme {P1, AI}
+enum State {MOVING, ROLLING}
 
 @export var SPEED : float = 300.0
 @export var JUMP_VELOCITY : float = -400.0
@@ -10,23 +11,27 @@ enum ControlScheme {P1, AI}
 @onready var animation: AnimationPlayer = %animation
 @onready var sprite: Sprite2D = %Sprite2D
 
-
 var heading = Vector2.RIGHT
 
+# statemanager
+var current_state : PlayerState
+var factory : PlayerStateFactory = PlayerStateFactory.new()
+
+func _ready() -> void:
+	switch_state(State.MOVING)
+
 func _physics_process(delta: float) -> void:
-	if control_scheme == ControlScheme.AI:
-		pass
-	else:
-		handle_human_movement()
-	set_heading()
 	flip()
-	set_movement_animaton()
 	move_and_slide()
 
-
-func handle_human_movement() -> void:
-	var direction =  KeyUtils.get_input_vector(control_scheme)
-	velocity = direction * SPEED
+func switch_state(new_state: State) -> void:
+	if current_state != null:
+		current_state.queue_free()
+	current_state = factory.get_fresh_state(new_state)
+	current_state.setup(self, sprite, animation)
+	current_state.transition_state_req.connect(switch_state.bind())
+	current_state.name = "state_machine_" + str(new_state)
+	call_deferred("add_child", current_state) 
 
 func set_movement_animaton() -> void:
 	if velocity.x != 0:
