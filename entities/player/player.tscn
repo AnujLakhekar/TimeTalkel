@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://bh8qmaji76eug"]
+
+[ext_resource type="Script" uid="uid://d0ffewq21dcr1" path="res://entities/player/scripts/player.gd" id="1_abrql"]
+[ext_resource type="Texture2D" uid="uid://uwpffjm3q1gt" path="res://assets/sprites/charecters/JumpPack_CharacterSpriteSheet.png" id="1_symyc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_symyc"]
+
+[sub_resource type="Animation" id="Animation_abrql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_26q78"]
+resource_name = "death"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [19, 20, 21, 22, 23]
+}
+
+[sub_resource type="Animation" id="Animation_qiwj3"]
+resource_name = "hurt"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.29861933),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 18]
+}
+
+[sub_resource type="Animation" id="Animation_sglur"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_bectd"]
+resource_name = "inactive"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [24, 24, 25, 26]
+}
+
+[sub_resource type="Animation" id="Animation_8fjmc"]
+resource_name = "jump"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_fkugw"]
+resource_name = "roll"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 14]
+}
+
+[sub_resource type="Animation" id="Animation_bls4j"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bls4j"]
+_data = {
+&"RESET": SubResource("Animation_abrql"),
+&"death": SubResource("Animation_26q78"),
+&"hurt": SubResource("Animation_qiwj3"),
+&"idle": SubResource("Animation_sglur"),
+&"inactive": SubResource("Animation_bectd"),
+&"jump": SubResource("Animation_8fjmc"),
+&"roll": SubResource("Animation_fkugw"),
+&"run": SubResource("Animation_bls4j")
+}
+
+[node name="player" type="CharacterBody2D" unique_id=2030560473]
+script = ExtResource("1_abrql")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1852293731]
+unique_name_in_owner = true
+texture = ExtResource("1_symyc")
+hframes = 4
+vframes = 7
+
+[node name="colistion" type="CollisionShape2D" parent="." unique_id=987164801]
+shape = SubResource("CircleShape2D_symyc")
+
+[node name="animation" type="AnimationPlayer" parent="." unique_id=398887579]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_bls4j")
+autoplay = &"idle"
